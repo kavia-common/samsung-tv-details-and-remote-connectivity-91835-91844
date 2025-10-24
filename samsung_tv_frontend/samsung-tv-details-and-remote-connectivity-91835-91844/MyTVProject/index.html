@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>MyTV</title>
+    <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="icon" href="assets/icons/icon.png" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <!-- Splash Screen -->
+    <div id="view-splash" class="splash view active" role="application" aria-label="Splash">
+      <div class="splash-title">MyTV</div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app-root" class="app hidden" role="application" aria-label="MyTV Application">
+      <!-- Top Menu -->
+      <div id="top-menu" class="top-menu" role="menubar" aria-label="Main Menu">
+        <div class="brand">MyTV</div>
+        <a class="menu-item" data-route="home" role="menuitem" aria-label="Home">Home</a>
+        <a class="menu-item" data-route="login" role="menuitem" aria-label="Login">Login</a>
+        <a class="menu-item" data-route="settings" role="menuitem" aria-label="Settings">Setting</a>
+        <a class="menu-item" data-route="my-plan" role="menuitem" aria-label="My Plan">My Plan</a>
+      </div>
+
+      <!-- Views -->
+      <div id="view-home" class="view">
+        <div class="banner" style="background-image:url('assets/banners/banner1.jpg')">
+          <div class="banner-content">
+            <div class="banner-title">Featured Tonight</div>
+            <div class="banner-subtitle">Blockbuster action and drama</div>
+          </div>
+        </div>
+
+        <div class="rails" id="rails-container" role="main" aria-label="Content Rails">
+          <!-- Rails populated by JS -->
+        </div>
+
+        <div class="section">
+          <h3 style="margin-top:0">Subscriptions</h3>
+          <div style="color: var(--muted)">
+            Subscribe to MyTV Plus for ad‑free viewing and early access to new releases.
+          </div>
+        </div>
+      </div>
+
+      <div id="view-login" class="view hidden" role="main" aria-label="Login">
+        <div class="section">
+          <h2>Login</h2>
+          <p style="color: var(--muted)">
+            This is a placeholder login screen. Use the remote arrows to navigate back using the top menu.
+          </p>
+        </div>
+      </div>
+
+      <div id="view-settings" class="view hidden" role="main" aria-label="Settings">
+        <div class="section">Settings coming soon…</div>
+      </div>
+
+      <div id="view-my-plan" class="view hidden" role="main" aria-label="My Plan">
+        <div style="
+          display:flex;align-items:center;justify-content:center;height:calc(100vh - 0px);
+          font-size:48px;font-weight:800;">
+          Hello World
+        </div>
+      </div>
+    </div>
+
+    <script src="js/app.js"></script>
+  </body>
+</html>

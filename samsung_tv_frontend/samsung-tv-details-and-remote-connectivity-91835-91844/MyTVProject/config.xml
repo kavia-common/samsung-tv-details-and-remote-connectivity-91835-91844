@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets"
+        xmlns:tizen="http://tizen.org/ns/widgets"
+        id="org.example.mytv"
+        version="1.0.0"
+        viewmodes="maximized"
+        defaultlocale="en-US">
+  <tizen:application id="org.example.mytv.MyTV"
+                     package="org.example.mytv"
+                     required_version="2.4"/>
+  <name>MyTV</name>
+  <icon src="assets/icons/icon.png"/>
+  <content src="index.html"/>
+  <description>MyTV - Samsung Tizen TV Web Application</description>
+  <author email="dev@example.com" href="https://example.com">Kavia</author>
+  <tizen:profile name="tv-samsung"/>
+
+  <tizen:setting screen-orientation="landscape" context-menu="disable" background-support="disable" encryption="disable" install-location="auto" hwkey-event="enable"/>
+
+  <tizen:metadata key="http://samsung.com/tv/metadata/use.official.webapis" value="true"/>
+
+  <!-- Features for TV -->
+  <tizen:feature name="http://tizen.org/feature/screen.size.normal"/>
+  <tizen:feature name="http://tizen.org/feature/tv.inputdevice"/>
+
+  <!-- Privileges -->
+  <tizen:privilege name="http://tizen.org/privilege/internet"/>
+  <tizen:privilege name="http://tizen.org/privilege/tv.inputdevice"/>
+</widget>

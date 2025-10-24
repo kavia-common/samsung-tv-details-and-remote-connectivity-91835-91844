@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+  <name>MyTVProject</name>
+  <comment>Tizen Web Project - MyTV</comment>
+  <projects/>
+  <buildSpec/>
+  <natures>
+    <nature>org.tizen.common.project.tizenNature</nature>
+    <nature>org.tizen.web.project.tizenWebNature</nature>
+  </natures>
+</projectDescription>
