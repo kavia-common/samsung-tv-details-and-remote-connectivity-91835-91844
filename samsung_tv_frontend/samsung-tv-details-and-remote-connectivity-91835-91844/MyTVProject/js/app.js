@@ -311,11 +311,11 @@
   }
 
   function showSplashThenHome() {
-    // 3 seconds splash then navigate to home
+    // 5 seconds splash then navigate to home
     setTimeout(() => {
       showApp();
       setRoute('home');
-    }, 3000);
+    }, 5000);
   }
 
   function init() {

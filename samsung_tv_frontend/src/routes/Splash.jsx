@@ -12,7 +12,7 @@ export default function Splash() {
       setVisible(false);
       const t2 = setTimeout(() => navigate('/home', { replace: true }), 350);
       return () => clearTimeout(t2);
-    }, 3000);
+    }, 5000);
     return () => clearTimeout(t);
   }, [navigate]);
 
