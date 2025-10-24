@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget
+  xmlns="http://www.w3.org/ns/widgets"
+  xmlns:tizen="http://tizen.org/ns/widgets"
+  id="org.kavia.mytv"
+  version="1.0.0"
+  viewmodes="maximized">
+  <name>MyTV</name>
+  <icon src="icon.png"/>
+  <content src="index.html"/>
+  <tizen:application id="org.kavia.mytv" package="org.kavia.mytv" required_version="2.4"/>
+  <tizen:profile name="tv"/>
+  <tizen:setting
+    screen-orientation="landscape"
+    context-menu="disable"
+    background-support="disable"
+    encryption="disable"
+    install-location="auto"/>
+  <tizen:privilege name="http://tizen.org/privilege/display"/>
+  <tizen:privilege name="http://tizen.org/privilege/internet"/>
+</widget>

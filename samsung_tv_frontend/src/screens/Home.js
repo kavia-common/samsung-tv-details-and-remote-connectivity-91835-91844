@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import TopNav from '../components/TopNav';
 import '../styles/theme.css';
+import FocusManager from '../remote/FocusManager';
 
 // Local hero/banner image
 import hero from '../assets/hero/hero1.jpg';
@@ -17,16 +18,59 @@ const railImages = [t1, t2, t3, t4, t5];
 /**
  * PUBLIC_INTERFACE
  * Home screen with navigation, banner, rails, and subscriptions.
+ * Supports Samsung remote focus navigation for top menu and rails.
  */
 export default function Home() {
-  const rails = [
+  const rails = useMemo(() => ([
     { title: 'Top Trending', images: railImages },
     { title: 'Continue Watching', images: railImages },
     { title: 'Action', images: railImages },
     { title: 'Drama', images: railImages },
     { title: 'Horror', images: railImages },
     { title: 'Comedy', images: railImages },
-  ];
+  ]), []);
+
+  const [focus, setFocus] = useState({ scope: 'menu', row: 0, index: 0 });
+  const railRefs = useRef([]);
+
+  useEffect(() => {
+    const fm = new FocusManager({
+      rows: rails.length,
+      getRowLength: (row) => rails[row]?.images?.length || 0,
+      onChange: (state) => setFocus(state),
+      onAction: (action, payload) => {
+        if (action === 'enter') {
+          if (payload.scope === 'rails') {
+            const title = rails[payload.row]?.title || '';
+            const item = payload.index + 1;
+            // Log selection for now
+            // eslint-disable-next-line no-console
+            console.log(`Selected: ${title} #${item}`);
+          }
+        }
+        if (action === 'back') {
+          // default back behavior could be handled by router elsewhere
+          // eslint-disable-next-line no-console
+          console.log('Back pressed');
+        }
+      }
+    });
+    // Start focus on menu
+    document.body.setAttribute('data-focus-scope', 'menu');
+
+    return () => fm.destroy();
+  }, [rails]);
+
+  // Auto-scroll focused item into view for better TV UX
+  useEffect(() => {
+    if (focus.scope !== 'rails') return;
+    const rowEl = railRefs.current[focus.row];
+    if (!rowEl) return;
+    const itemEl = rowEl.querySelector(`[data-rail-index="${focus.index}"]`);
+    if (itemEl) {
+      itemEl.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    }
+  }, [focus]);
 
   const subs = [
     { name: 'Basic', price: '$4.99/mo', desc: '720p • 1 screen' },
@@ -34,9 +78,22 @@ export default function Home() {
     { name: 'Premium', price: '$14.99/mo', desc: '4K • 4 screens' },
   ];
 
+  const cardStyle = (row, idx) => {
+    const focused = focus.scope === 'rails' && focus.row === row && focus.index === idx;
+    return {
+      background: 'var(--surface)',
+      borderRadius: 12,
+      overflow: 'hidden',
+      border: focused ? '2px solid #2563EB' : '1px solid #eef2f7',
+      boxShadow: focused ? '0 0 0 4px rgba(37,99,235,0.2), var(--shadow-lg)' : 'var(--shadow-md)',
+      transform: focused ? 'translateY(-2px) scale(1.02)' : 'none',
+      transition: 'transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease'
+    };
+  };
+
   return (
     <div className="page">
-      <TopNav />
+      <TopNav enableRemote />
       <div className="container">
         <div className="banner">
           <img src={hero} alt="Featured" />
@@ -44,12 +101,18 @@ export default function Home() {
           <div className="banner-title">Featured Tonight</div>
         </div>
 
-        {rails.map((rail) => (
+        {rails.map((rail, rIdx) => (
           <section key={rail.title}>
             <h3 className="section-title">{rail.title}</h3>
-            <div className="rail">
+            <div className="rail" ref={(el) => { railRefs.current[rIdx] = el; }}>
               {rail.images.map((img, idx) => (
-                <div className="card" key={`${rail.title}-${idx}`}>
+                <div
+                  className="card"
+                  key={`${rail.title}-${idx}`}
+                  data-rail-row={rIdx}
+                  data-rail-index={idx}
+                  style={cardStyle(rIdx, idx)}
+                >
                   <img src={img} alt={`${rail.title} ${idx + 1}`} />
                   <div className="caption">Title {idx + 1}</div>
                 </div>
