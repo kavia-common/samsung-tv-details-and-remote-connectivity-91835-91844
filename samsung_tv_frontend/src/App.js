@@ -1,47 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
+import './styles/theme.css';
+import Splash from './routes/Splash.tsx';
+import Home from './routes/Home.tsx';
+import Login from './routes/Login.tsx';
+import MyPlan from './routes/MyPlan.tsx';
 
 // PUBLIC_INTERFACE
 function App() {
-  const [theme, setTheme] = useState('light');
-
-  // Effect to apply theme to document element
+  /** Root component configuring routes for Splash, Home, Login, My Plan */
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
-
-  // PUBLIC_INTERFACE
-  const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
-  };
+    document.documentElement.setAttribute('data-theme', 'light');
+  }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <button 
-          className="theme-toggle" 
-          onClick={toggleTheme}
-          aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-        >
-          {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
-        </button>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>
-          Current theme: <strong>{theme}</strong>
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" style={{ background: 'var(--bg)', color: 'var(--text)' }}>
+      <Router>
+        <Routes>
+          <Route path="/splash" element={<Splash />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/my-plan" element={<MyPlan />} />
+          <Route path="/setting" element={<Home />} />
+          <Route path="*" element={<Navigate to="/splash" replace />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
