@@ -1,47 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
+import './styles/theme.css';
+import Splash from './routes/Splash';
+import Home from './routes/Home';
+import Login from './routes/Login';
+import MyPlan from './routes/MyPlan';
 
-// PUBLIC_INTERFACE
+/**
+ * PUBLIC_INTERFACE
+ * App is the root component that registers all routes and renders the TV UI pages.
+ * Routes:
+ *  - /                Splash screen, auto navigates to /home
+ *  - /home            Home page with top menu and content rails
+ *  - /login           Login page
+ *  - /my-plan         My Plan page
+ *  - /settings        Settings (stub)
+ */
 function App() {
-  const [theme, setTheme] = useState('light');
-
-  // Effect to apply theme to document element
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
-
-  // PUBLIC_INTERFACE
-  const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
-  };
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <button 
-          className="theme-toggle" 
-          onClick={toggleTheme}
-          aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-        >
-          {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
-        </button>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>
-          Current theme: <strong>{theme}</strong>
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app" role="application" aria-label="MyTV Application">
+      <Routes>
+        <Route path="/" element={<Splash />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/my-plan" element={<MyPlan />} />
+        <Route path="/settings" element={<div className="section">Settings coming soon…</div>} />
+        <Route path="*" element={<Navigate to="/home" replace />} />
+      </Routes>
     </div>
   );
 }

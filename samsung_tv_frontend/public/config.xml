@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets"
+  xmlns:tizen="http://tizen.org/ns/widgets"
+  id="org.example.mytv"
+  version="1.0.0"
+  viewmodes="maximized"
+  width="1920"
+  height="1080">
+  <name>MyTV</name>
+  <tizen:application id="org.example.mytv.App" package="org.example.mytv" required_version="4.0"/>
+  <content src="index.html"/>
+  <icon src="icon.png"/>
+  <tizen:metadata key="http://samsung.com/tv/metadata/use.partnerid" value="true"/>
+  <tizen:profile name="tv-samsung"/>
+  <feature name="http://tizen.org/feature/screen.size.normal.any"/>
+  <access origin="*"/>
+  <tizen:setting screen-orientation="landscape" context-menu="disable" background-support="disable" encryption="disable" install-location="auto"/>
+  <tizen:privilege name="http://tizen.org/privilege/internet"/>
+  <tizen:category name="http://tizen.org/category/tv"/>
+  <description>MyTV React Tizen TV App sample</description>
+  <author href="https://example.org" email="dev@example.org">Kavia</author>
+  <license href="https://opensource.org/licenses/MIT">MIT</license>
+</widget>
