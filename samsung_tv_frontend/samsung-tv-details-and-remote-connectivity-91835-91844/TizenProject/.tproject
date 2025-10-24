@@ -1,0 +1,5 @@
+# Tizen Studio project marker
+profile=TV
+type=web
+version=5.5
+name=MyTV

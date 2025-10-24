@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MyTV - Tizen Wrapper</title>
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0, user-scalable=no" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <link rel="icon" href="icon.png" />
+  <style>
+    html, body { margin: 0; padding: 0; background: #000; color: #fff; font-family: Arial, Helvetica, sans-serif; }
+    .container { min-height: 100vh; display: grid; place-items: center; text-align: center; padding: 24px; }
+    .card { background: #111; border: 1px solid rgba(255,255,255,.12); border-radius: 12px; padding: 20px 24px; max-width: 900px; }
+    .btn { display: inline-block; padding: 10px 16px; border-radius: 8px; background: #2563EB; color: #fff; text-decoration: none; margin-top: 12px; }
+    .muted { color: rgba(255,255,255,.7); font-size: 14px; }
+    iframe { width: 100vw; height: 100vh; border: none; display: none; }
+  </style>
+  <script>
+    // Try to load local bundle from ./wres/index.html (recommended)
+    function tryLoadLocalBundle() {
+      var iframe = document.getElementById('appFrame');
+      var fallback = document.getElementById('fallback');
+
+      // You can change this to point to a hosted URL if desired.
+      var localEntry = 'wres/index.html';
+
+      // Attempt to check if the local entry exists by trying to load it.
+      iframe.onload = function() {
+        // If it loads, show iframe and hide fallback.
+        iframe.style.display = 'block';
+        fallback.style.display = 'none';
+      };
+
+      iframe.onerror = function() {
+        // If error, keep showing fallback instructions.
+        iframe.style.display = 'none';
+        fallback.style.display = 'block';
+      };
+
+      // Set src (Tizen packs all under app root)
+      iframe.src = localEntry;
+    }
+
+    document.addEventListener('DOMContentLoaded', tryLoadLocalBundle);
+  </script>
+</head>
+<body>
+  <iframe id="appFrame" title="MyTV App"></iframe>
+  <div id="fallback" class="container">
+    <div class="card">
+      <img src="splash.png" alt="Splash" style="width: 160px; height: auto; margin-bottom: 16px;" />
+      <h1>MyTV - Tizen Wrapper</h1>
+      <p class="muted">
+        Place your React build output into <code>TizenProject/wres</code> so that
+        <code>wres/index.html</code> can be loaded inside this container.
+      </p>
+      <ol style="text-align:left; max-width: 700px; margin: 16px auto; line-height: 1.6;">
+        <li>Run: <code>npm run build</code> in <code>samsung_tv_frontend</code>.</li>
+        <li>Copy the contents of <code>samsung_tv_frontend/build/</code> into <code>TizenProject/wres/</code>.</li>
+        <li>Ensure the entry file is <code>TizenProject/wres/index.html</code>.</li>
+        <li>Rebuild/import the project in Tizen Studio and run on TV emulator.</li>
+      </ol>
+      <a class="btn" href="#" onclick="tryLoadLocalBundle(); return false;">Retry loading local bundle</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets"
+        xmlns:tizen="http://tizen.org/ns/widgets"
+        id="com.example.mytv"
+        version="1.0.0"
+        viewmodes="maximized">
+  <tizen:application id="com.example.mytv"
+                     package="com.example"
+                     required_version="5.5"
+                     executable="index.html"
+                     type="web-application"/>
+  <tizen:profile name="tv" version="5.5"/>
+  <name>MyTV</name>
+  <icon src="icon.png"/>
+  <content src="index.html"/>
+  <description>MyTV React container for Samsung Tizen TV (emulator)</description>
+  <author href="https://example.com" email="dev@example.com">Example Dev</author>
+  <license href="https://opensource.org/licenses/MIT">MIT</license>
+
+  <tizen:category name="http://tizen.org/category/tv"/>
+  <tizen:metadata key="http://samsung.com/tv/metadata/use.signage" value="false"/>
+
+  <!-- Network access privilege for fetching resources, API calls, etc. -->
+  <tizen:privilege name="http://tizen.org/privilege/internet"/>
+  <!-- Optional but commonly used for storage -->
+  <tizen:privilege name="http://tizen.org/privilege/filesystem.read"/>
+  <tizen:privilege name="http://tizen.org/privilege/filesystem.write"/>
+
+  <!-- Content Security Policy: allow local resources and self; adjust if loading remote APIs -->
+  <tizen:content-security-policy>
+    default-src 'self' data: blob:;
+    img-src 'self' data: blob:;
+    media-src 'self' blob: data:;
+    style-src 'self' 'unsafe-inline';
+    script-src 'self' 'unsafe-eval' 'unsafe-inline';
+    connect-src 'self' https: http:;
+    font-src 'self' data:;
+    frame-src 'self';
+  </tizen:content-security-policy>
+
+  <!-- TV-specific display options -->
+  <tizen:setting screen-orientation="landscape" background-support="disable" encryption="disable" context-menu="disable" hwkey-event="enable"/>
+</widget>

@@ -1,0 +1,9 @@
+{
+  "name": "MyTV",
+  "type": "web",
+  "profile": "tv",
+  "version": "5.5",
+  "id": "com.example.mytv",
+  "package": "com.example",
+  "description": "Tizen Web App wrapper for React build"
+}
