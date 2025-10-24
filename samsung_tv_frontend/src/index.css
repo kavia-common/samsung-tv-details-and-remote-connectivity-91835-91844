@@ -5,7 +5,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Fallback color and gradient to match Ocean Professional */
   background: #f9fafb;
+  background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(249,250,251,1));
+  background-attachment: fixed;
   color: #111827;
 }
 

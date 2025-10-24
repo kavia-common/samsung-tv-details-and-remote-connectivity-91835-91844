@@ -22,8 +22,7 @@ export default function Splash() {
   return (
     <div className="page" style={{
       display: 'grid',
-      placeItems: 'center',
-      background: 'linear-gradient(180deg,#eff6ff,#f9fafb)'
+      placeItems: 'center'
     }}>
       <div style={{
         textAlign: 'center',
