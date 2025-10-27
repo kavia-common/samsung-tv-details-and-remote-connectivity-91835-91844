@@ -65,21 +65,32 @@ class RemoteService {
   }
 
   // PUBLIC_INTERFACE
-  async sendKey(key: string) {
-    /** Send a key command to remote (simulated). Throws if not connected. */
+  async sendKey(key: string): Promise<boolean> {
+    /** Send a key command to remote (simulated). Safe no-op if not connected. */
     if (this.status !== 'connected') {
-      const msg = 'RemoteService: not connected';
-      this.emit({ type: 'error', error: msg });
-      throw new Error(msg);
+      const msg = 'RemoteService.sendKey ignored: not connected';
+      // Warn in console for visibility; also emit error event for UI badges/logs
+      // but do not throw to avoid breaking UI interactions.
+      // eslint-disable-next-line no-console
+      console.warn(msg);
+      this.emit({ type: 'error', error: 'RemoteService: not connected' });
+      return false;
     }
     // In a real implementation, send over WebSocket/fetch here
     this.emit({ type: 'message', data: { type: 'key', key, t: Date.now() } });
+    return true;
   }
 
   // PUBLIC_INTERFACE
   getStatus(): RemoteStatus {
     /** Retrieve current connection status. */
     return this.status;
+  }
+
+  // PUBLIC_INTERFACE
+  isConnected(): boolean {
+    /** Convenience helper to check if service is connected. */
+    return this.status === 'connected';
   }
 }
 

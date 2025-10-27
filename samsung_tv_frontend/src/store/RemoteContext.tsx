@@ -5,9 +5,10 @@ import remoteService, { RemoteStatus, RemoteEvent } from '../services/RemoteServ
 export type RemoteContextValue = {
   status: RemoteStatus;
   lastMessage?: any;
+  isConnected: boolean;
   connect: () => Promise<void>;
   disconnect: () => Promise<void>;
-  sendKey: (key: string) => Promise<void>;
+  sendKey: (key: string) => Promise<boolean>;
 };
 
 const RemoteContext = createContext<RemoteContextValue | undefined>(undefined);
@@ -40,9 +41,19 @@ export function RemoteProvider({ children }: { children: React.ReactNode }) {
   const value = useMemo<RemoteContextValue>(() => ({
     status,
     lastMessage,
+    isConnected: remoteService.isConnected(),
     connect: () => remoteService.connect(),
     disconnect: () => remoteService.disconnect(),
-    sendKey: (k: string) => remoteService.sendKey(k),
+    sendKey: async (k: string) => {
+      // Defensive: Do not throw; RemoteService already no-ops when not connected.
+      try {
+        return await remoteService.sendKey(k);
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.warn('sendKey guarded error:', e);
+        return false;
+      }
+    },
   }), [status, lastMessage]);
 
   return <RemoteContext.Provider value={value}>{children}</RemoteContext.Provider>;

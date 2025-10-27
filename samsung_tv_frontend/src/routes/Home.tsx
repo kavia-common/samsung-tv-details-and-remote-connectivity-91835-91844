@@ -12,7 +12,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
  * and an Available Subscriptions section. Thumbnails use local images with graceful fallbacks.
  */
 export default function Home() {
-  const { status, lastMessage, connect, disconnect, sendKey } = useRemote();
+  const { status, lastMessage, connect, disconnect, sendKey, isConnected } = useRemote();
   const { register } = useRemoteKeys();
   const navigate = useNavigate();
   const location = useLocation();
@@ -196,15 +196,76 @@ export default function Home() {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, placeItems: 'center', marginTop: 12 }}>
               <div />
-              <button className="thumbnail" style={{ width: 100, height: 70 }} onClick={() => sendKey('ArrowUp')} aria-label="Up">▲</button>
+              <button
+                className="thumbnail"
+                style={{ width: 100, height: 70 }}
+                onClick={async () => {
+                  const ok = await sendKey('ArrowUp');
+                  if (!ok || !isConnected) {
+                    // fallback to local navigation: ArrowUp key event
+                    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp' }));
+                  }
+                }}
+                aria-label="Up"
+              >
+                ▲
+              </button>
               <div />
 
-              <button className="thumbnail" style={{ width: 100, height: 70 }} onClick={() => sendKey('ArrowLeft')} aria-label="Left">◀</button>
-              <button className="thumbnail" style={{ width: 100, height: 70, fontWeight: 800 }} onClick={() => sendKey('Enter')} aria-label="OK">OK</button>
-              <button className="thumbnail" style={{ width: 100, height: 70 }} onClick={() => sendKey('ArrowRight')} aria-label="Right">▶</button>
+              <button
+                className="thumbnail"
+                style={{ width: 100, height: 70 }}
+                onClick={async () => {
+                  const ok = await sendKey('ArrowLeft');
+                  if (!ok || !isConnected) {
+                    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft' }));
+                  }
+                }}
+                aria-label="Left"
+              >
+                ◀
+              </button>
+              <button
+                className="thumbnail"
+                style={{ width: 100, height: 70, fontWeight: 800 }}
+                onClick={async () => {
+                  const ok = await sendKey('Enter');
+                  if (!ok || !isConnected) {
+                    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+                  }
+                }}
+                aria-label="OK"
+              >
+                OK
+              </button>
+              <button
+                className="thumbnail"
+                style={{ width: 100, height: 70 }}
+                onClick={async () => {
+                  const ok = await sendKey('ArrowRight');
+                  if (!ok || !isConnected) {
+                    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
+                  }
+                }}
+                aria-label="Right"
+              >
+                ▶
+              </button>
 
               <div />
-              <button className="thumbnail" style={{ width: 100, height: 70 }} onClick={() => sendKey('ArrowDown')} aria-label="Down">▼</button>
+              <button
+                className="thumbnail"
+                style={{ width: 100, height: 70 }}
+                onClick={async () => {
+                  const ok = await sendKey('ArrowDown');
+                  if (!ok || !isConnected) {
+                    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+                  }
+                }}
+                aria-label="Down"
+              >
+                ▼
+              </button>
               <div />
             </div>
           </div>
