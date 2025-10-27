@@ -1,8 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import TopMenu from '../components/TopMenu';
 import Banner from '../components/Banner';
 import Rail from '../components/Rail';
 import { useRemote } from '../store/RemoteContext.tsx';
+import { useRemoteKeys } from '../store/RemoteProvider.tsx';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 /**
  * PUBLIC_INTERFACE
@@ -11,6 +13,22 @@ import { useRemote } from '../store/RemoteContext.tsx';
  */
 export default function Home() {
   const { status, lastMessage, connect, disconnect, sendKey } = useRemote();
+  const { register } = useRemoteKeys();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Register a minimal BACK handler for this screen (other keys are handled by components like TopMenu)
+  useEffect(() => {
+    const unregister = register({
+      onBack: () => {
+        // If already at /home, do nothing (or could open overlay)
+        if (location.pathname !== '/home') {
+          navigate('/home', { replace: true });
+        }
+      }
+    });
+    return unregister;
+  }, [register, navigate, location.pathname]);
 
   // Helper to reference local placeholder images from /assets path.
   const img = (name: string) => `/assets/${name}`;

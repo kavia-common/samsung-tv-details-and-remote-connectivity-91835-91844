@@ -7,7 +7,9 @@ import Home from './routes/Home';
 import Login from './routes/Login';
 import MyPlan from './routes/MyPlan';
 import Settings from './routes/Settings';
-import { RemoteProvider } from './store/RemoteContext.tsx';
+import { RemoteProvider as ConnectivityProvider } from './store/RemoteContext.tsx';
+import { RemoteProvider as RemoteKeysProvider } from './store/RemoteProvider.tsx';
+import './types/tizen.d.ts';
 
 /**
  * PUBLIC_INTERFACE
@@ -29,16 +31,18 @@ function App() {
 
   return (
     <div className="App" style={bgStyle}>
-      <RemoteProvider>
-        <Routes>
-          <Route path="/" element={<Splash />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/my-plan" element={<MyPlan />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </RemoteProvider>
+      <ConnectivityProvider>
+        <RemoteKeysProvider>
+          <Routes>
+            <Route path="/" element={<Splash />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/my-plan" element={<MyPlan />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </RemoteKeysProvider>
+      </ConnectivityProvider>
     </div>
   );
 }
