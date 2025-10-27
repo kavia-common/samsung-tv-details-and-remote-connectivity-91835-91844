@@ -7,9 +7,11 @@ import Home from './routes/Home.tsx';
 import Login from './routes/Login.tsx';
 import MyPlan from './routes/MyPlan.tsx';
 
-// PUBLIC_INTERFACE
+/**
+ * PUBLIC_INTERFACE
+ * Root component configuring routes for Splash, Home, Login, My Plan and Settings placeholder.
+ */
 function App() {
-  /** Root component configuring routes for Splash, Home, Login, My Plan */
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', 'light');
   }, []);
@@ -18,12 +20,12 @@ function App() {
     <div className="App" style={{ background: 'var(--bg)', color: 'var(--text)' }}>
       <Router>
         <Routes>
-          <Route path="/splash" element={<Splash />} />
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Splash />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/my-plan" element={<MyPlan />} />
-          <Route path="/setting" element={<Home />} />
-          <Route path="*" element={<Navigate to="/splash" replace />} />
+          <Route path="/settings" element={<div className="container section" style={{ marginTop: 20 }}><h2>Hello World</h2><p>Settings placeholder</p></div>} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Router>
     </div>
