@@ -14,9 +14,14 @@ export default function Banner() {
     }
   }, []);
 
+  const onImgError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    const el = e.currentTarget;
+    el.style.display = 'none';
+  };
+
   return (
     <div className="banner section" role="group" aria-label="Featured Banner">
-      <img src="/assets/banner.jpg" alt="Featured this week" />
+      <img src="/assets/banner.jpg" alt="Featured this week" onError={onImgError} />
       <div className="banner-overlay" />
       <div className="banner-title">Featured This Week</div>
       <button

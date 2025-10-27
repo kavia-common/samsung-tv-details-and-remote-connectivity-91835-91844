@@ -142,7 +142,12 @@ export default function Home() {
               aria-selected="false"
               style={{ minWidth: 260, width: 260, height: 120, display: 'grid', placeItems: 'center', fontWeight: 700, color: 'var(--primary)' }}
             >
-              Basic - $4.99
+              <img
+                src="/assets/subscriptions/basic.png"
+                alt="Basic logo"
+                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+              />
+              <span>Basic - $4.99</span>
             </button>
             <button
               ref={(el) => (subscriptionRefs.current[1] = el)}
@@ -152,7 +157,12 @@ export default function Home() {
               aria-selected="false"
               style={{ minWidth: 260, width: 260, height: 120, display: 'grid', placeItems: 'center', fontWeight: 700, color: 'var(--secondary)' }}
             >
-              Standard - $9.99
+              <img
+                src="/assets/subscriptions/standard.png"
+                alt="Standard logo"
+                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+              />
+              <span>Standard - $9.99</span>
             </button>
             <button
               ref={(el) => (subscriptionRefs.current[2] = el)}
@@ -162,7 +172,12 @@ export default function Home() {
               aria-selected="false"
               style={{ minWidth: 260, width: 260, height: 120, display: 'grid', placeItems: 'center', fontWeight: 700, color: 'var(--primary)' }}
             >
-              Premium - $14.99
+              <img
+                src="/assets/subscriptions/premium.png"
+                alt="Premium logo"
+                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+              />
+              <span>Premium - $14.99</span>
             </button>
           </div>
         </section>

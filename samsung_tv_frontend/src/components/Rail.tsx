@@ -87,7 +87,15 @@ export default function Rail({ title, images, index = 0 }: RailProps) {
             aria-label={`${title} item ${i + 1}`}
             aria-selected={focusManager.getCurrent().group === group && focusManager.getCurrent().index === i ? 'true' : 'false'}
           >
-            <img src={src} alt={`${title} ${i + 1}`} />
+            <img
+              src={src}
+              alt={`${title} ${i + 1}`}
+              onError={(e) => {
+                const el = e.currentTarget as HTMLImageElement;
+                // if the specific asset is missing, hide img to reveal background of the button
+                el.style.display = 'none';
+              }}
+            />
           </button>
         ))}
       </div>

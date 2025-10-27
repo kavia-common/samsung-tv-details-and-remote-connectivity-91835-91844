@@ -6,13 +6,14 @@ import Splash from './routes/Splash';
 import Home from './routes/Home';
 import Login from './routes/Login';
 import MyPlan from './routes/MyPlan';
+import Settings from './routes/Settings';
 import useTVRemote from './hooks/useTVRemote.ts';
 import { RemoteProvider } from './store/RemoteContext.tsx';
 
 /**
  * PUBLIC_INTERFACE
- * Root component configuring routes for Splash, Home, Login, My Plan and Settings placeholder.
- * Note: Router is instantiated once at the app root (index.js) using HashRouter for Tizen/webapp compatibility.
+ * Root component configuring routes for Splash, Home, Login, My Plan and Settings.
+ * Note: HashRouter is instantiated once at app root (index.js) for Tizen/webapp compatibility.
  */
 function App() {
   useEffect(() => {
@@ -38,15 +39,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/my-plan" element={<MyPlan />} />
-          <Route
-            path="/settings"
-            element={
-              <div className="container section" style={{ marginTop: 20 }}>
-                <h2>Settings</h2>
-                <p>Settings placeholder</p>
-              </div>
-            }
-          />
+          <Route path="/settings" element={<Settings />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </RemoteProvider>

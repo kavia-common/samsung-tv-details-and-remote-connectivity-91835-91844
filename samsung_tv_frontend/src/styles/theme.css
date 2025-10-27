@@ -136,6 +136,7 @@ a { color: inherit; text-decoration: none; }
   width: 100%;
   height: 100%;
   object-fit: cover;
+  background: linear-gradient(180deg, rgba(17,24,39,0.06), rgba(17,24,39,0.02));
 }
 
 .thumbnail:focus-visible, .thumbnail:hover, .btn-focusable:focus-visible {
