@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 /**
  * PUBLIC_INTERFACE
- * Splash screen showing 'MyTV' for ~3 seconds then routes to /home with fade-out.
+ * Splash screen: displays "MyTV" centered and auto-navigates to Home after 3 seconds.
  */
 export default function Splash() {
   const navigate = useNavigate();

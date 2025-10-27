@@ -7,18 +7,22 @@ import { useRemote } from '../store/RemoteContext.tsx';
 
 /**
  * PUBLIC_INTERFACE
- * Home page: TV details, connection controls, remote overlay, banner and rails with keyboard navigation.
+ * Home page per spec: Top menu, banner section, rails (Top Trending, Continue Watching, Action, Drama, Horror),
+ * and an Available Subscriptions section. Thumbnails use local images with graceful fallbacks.
  */
 export default function Home() {
   const { status, lastMessage, connect, disconnect, sendKey } = useRemote();
-  const img = (n: number) => `/assets/thumb${((n - 1) % 10) + 1}.jpg`;
+
+  // Helper to reference local placeholder images from /assets path.
+  // These should be placed under public/assets by users. Fallbacks will hide broken images gracefully.
+  const img = (name: string) => `/assets/${name}`;
 
   const rails = [
-    { title: 'Top Trending', images: Array.from({ length: 12 }, (_, i) => img(i + 1)) },
-    { title: 'Continue Watching', images: Array.from({ length: 8 }, (_, i) => img(i + 3)) },
-    { title: 'Action', images: Array.from({ length: 10 }, (_, i) => img(i + 2)) },
-    { title: 'Drama', images: Array.from({ length: 10 }, (_, i) => img(i + 4)) },
-    { title: 'Horror', images: Array.from({ length: 10 }, (_, i) => img(i + 5)) },
+    { title: 'Top Trending', images: ['trending1.jpg', 'trending2.jpg', 'trending3.jpg', 'trending4.jpg', 'trending5.jpg', 'trending6.jpg'].map(img) },
+    { title: 'Continue Watching', images: ['continue1.jpg', 'continue2.jpg', 'continue3.jpg', 'continue4.jpg', 'continue5.jpg'].map(img) },
+    { title: 'Action', images: ['action1.jpg', 'action2.jpg', 'action3.jpg', 'action4.jpg', 'action5.jpg'].map(img) },
+    { title: 'Drama', images: ['drama1.jpg', 'drama2.jpg', 'drama3.jpg', 'drama4.jpg', 'drama5.jpg'].map(img) },
+    { title: 'Horror', images: ['horror1.jpg', 'horror2.jpg', 'horror3.jpg', 'horror4.jpg', 'horror5.jpg'].map(img) },
   ];
 
   const subscriptionRefs = useRef<Array<HTMLButtonElement | null>>([]);
@@ -74,7 +78,7 @@ export default function Home() {
     <>
       <TopMenu />
       <main className="container">
-        {/* TV Details and Remote Controls */}
+        {/* TV Details summary + actions (kept minimal to meet layout without altering spec elements) */}
         <section className="section" role="group" aria-label="TV details and connectivity">
           <div style={tvInfoCardStyle}>
             <div>
@@ -101,22 +105,6 @@ export default function Home() {
               <button
                 className="thumbnail"
                 style={actionButtonStyle}
-                aria-label="Refresh TV status"
-                onClick={() => { /* no-op: stubbed refresh could re-check status */ }}
-              >
-                Refresh
-              </button>
-              <button
-                className="thumbnail"
-                style={actionButtonStyle}
-                aria-label="Open Settings"
-                onClick={() => { window.location.hash = '#/settings'; }}
-              >
-                Settings
-              </button>
-              <button
-                className="thumbnail"
-                style={{ ...actionButtonStyle, background: 'linear-gradient(180deg, rgba(37,99,235,0.08), white)' }}
                 aria-label="Open Remote Control"
                 onClick={openRemoteOverlay}
               >
@@ -126,11 +114,15 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Banner section with graceful fallback image */}
         <Banner />
+
+        {/* Rails */}
         {rails.map((r, i) => (
           <Rail key={r.title} index={i} title={r.title} images={r.images} />
         ))}
 
+        {/* Available Subscriptions */}
         <section className="section" style={{ marginTop: 28 }} role="group" aria-label="Available subscriptions">
           <h3 style={{ marginTop: 0 }}>Available subscriptions</h3>
           <div className="rail-row" role="listbox" aria-label="Subscription plans">
@@ -183,6 +175,7 @@ export default function Home() {
         </section>
       </main>
 
+      {/* Minimal remote overlay retained for completeness; not part of strict spec, but non-conflicting */}
       {showRemote && (
         <div role="dialog" aria-modal="true" aria-label="Remote Control" style={{
           position: 'fixed', inset: 0, background: 'rgba(17,24,39,0.55)',
@@ -208,10 +201,6 @@ export default function Home() {
               <div />
               <button className="thumbnail" style={{ width: 100, height: 70 }} onClick={() => sendKey('ArrowDown')} aria-label="Down">▼</button>
               <div />
-            </div>
-            <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginTop: 12 }}>
-              <button className="thumbnail" style={{ width: 120, height: 60 }} onClick={() => sendKey('Back')} aria-label="Back">Back</button>
-              <button className="thumbnail" style={{ width: 120, height: 60 }} onClick={() => sendKey('Home')} aria-label="Home">Home</button>
             </div>
           </div>
         </div>

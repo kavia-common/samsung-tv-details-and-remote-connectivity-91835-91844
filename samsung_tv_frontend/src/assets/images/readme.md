@@ -1,22 +1,19 @@
-# Local Images for Rails and Banner
+# Local Images for Banner and Rails (Placeholders)
 
-Place your local images for the horizontal rails and banner under the public assets folder so they can be served as `/assets/...`.
+Place your local images under `public/assets` so they can be referenced via `/assets/...`.
 
-Recommended structure (under `public/assets`):
-- /assets/banner.jpg                           -> Hero image for the banner
-- /assets/thumb1.jpg ... /assets/thumb10.jpg   -> Generic thumbnails for sample rails
+Required placeholders used by the UI:
+- /assets/banner.jpg
+- /assets/trending1.jpg ... /assets/trending6.jpg
+- /assets/continue1.jpg ... /assets/continue5.jpg
+- /assets/action1.jpg ... /assets/action5.jpg
+- /assets/drama1.jpg ... /assets/drama5.jpg
+- /assets/horror1.jpg ... /assets/horror5.jpg
+- /assets/subscriptions/basic.png
+- /assets/subscriptions/standard.png
+- /assets/subscriptions/premium.png
 
-Optional category folders (if you want themed images):
-- /assets/action/...
-- /assets/drama/...
-- /assets/horror/...
-- /assets/trending/...
-- /assets/continue/...
-
-In code, images are referenced with absolute paths like:
-- "/assets/banner.jpg"
-- "/assets/thumb1.jpg"
-
-Note:
+Notes:
+- If an image is missing, the UI hides the broken <img> gracefully and shows a clean card background.
 - The app uses HashRouter and is designed for Samsung Tizen emulator compatibility.
 - All cards are focusable with a visible focus ring for TV remote navigation.

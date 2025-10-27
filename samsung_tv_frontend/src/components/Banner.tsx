@@ -3,7 +3,7 @@ import focusManager from '../utils/focusManager.ts';
 
 // PUBLIC_INTERFACE
 export default function Banner() {
-  /** Displays a featured banner using local asset */
+  /** Displays a featured banner using local asset (/assets/banner.jpg) with graceful fallback. */
   const bannerBtnRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {

@@ -12,22 +12,23 @@ import { RemoteProvider } from './store/RemoteContext.tsx';
 
 /**
  * PUBLIC_INTERFACE
- * Root component configuring routes for Splash, Home, Login, My Plan and Settings.
- * Note: HashRouter is instantiated once at app root (index.js) for Tizen/webapp compatibility.
+ * Root component that only declares application Routes.
+ * HashRouter is instantiated once in index.js (do not nest any Router here).
+ * Routes: Splash (/), Home (/home), Login (/login), My Plan (/my-plan), Settings (/settings).
  */
 function App() {
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', 'light');
   }, []);
 
-  // attach global TV remote key handling
+  // Attach global TV remote key handling
   useTVRemote();
 
-  // Apply Ocean Professional subtle gradient background globally
+  // Ocean Professional gradient background and clean styling
   const bgStyle = {
     minHeight: '100vh',
     background:
-      'linear-gradient(180deg, rgba(37,99,235,0.08), rgba(243,244,246,1))',
+      'radial-gradient(800px 400px at 20% -10%, rgba(37,99,235,0.10), transparent), linear-gradient(180deg, rgba(37,99,235,0.05), rgba(243,244,246,1))',
     color: 'var(--text)',
   };
 
