@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import TopMenu from '../components/TopMenu';
 import Banner from '../components/Banner';
 import Rail from '../components/Rail';
+import focusManager from '../utils/focusManager.ts';
 
 /**
  * PUBLIC_INTERFACE
@@ -16,38 +17,20 @@ export default function Home() {
     { title: 'Action', images: Array.from({ length: 10 }, (_, i) => img(i + 2)) },
     { title: 'Drama', images: Array.from({ length: 10 }, (_, i) => img(i + 4)) },
     { title: 'Horror', images: Array.from({ length: 10 }, (_, i) => img(i + 5)) },
-    { title: 'Others', images: Array.from({ length: 10 }, (_, i) => img(i + 6)) },
   ];
 
-  const firstButtonsRef = useRef<Array<HTMLButtonElement | null>>([]);
-  const subscriptionRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const subscriptionRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
   useEffect(() => {
-    const handler = (evt: any) => {
-      const { fromRail, direction } = evt.detail || {};
-      if (direction === 'down') {
-        if (fromRail < rails.length - 1) {
-          // focus first item of next rail
-          const nextRailFirstBtn = document.querySelectorAll('.rail')[fromRail + 1]?.querySelector('.thumbnail') as HTMLButtonElement | null;
-          nextRailFirstBtn?.focus();
-        } else {
-          // move to subscriptions
-          subscriptionRefs.current[0]?.focus();
-        }
-      } else if (direction === 'up') {
-        if (fromRail > 0) {
-          const prevRailFirstBtn = document.querySelectorAll('.rail')[fromRail - 1]?.querySelector('.thumbnail') as HTMLButtonElement | null;
-          prevRailFirstBtn?.focus();
-        } else {
-          // focus menu (first item)
-          const firstMenu = document.querySelector('.top-menu .menu-item') as HTMLAnchorElement | null;
-          firstMenu?.focus();
-        }
+    // Register subscriptions as a focus group
+    subscriptionRefs.current.forEach((el, i) => {
+      if (el) {
+        el.setAttribute('role', 'option');
+        el.onfocus = () => focusManager.setCurrent('subscriptions', i);
+        focusManager.register(`subscriptions-${i}`, 'subscriptions', el, i);
       }
-    };
-      window.addEventListener('rail-nav' as any, handler as EventListener);
-      return () => window.removeEventListener('rail-nav' as any, handler as EventListener);
-  }, [rails.length]);
+    });
+  }, []);
 
   return (
     <>
@@ -58,33 +41,39 @@ export default function Home() {
           <Rail key={r.title} index={i} title={r.title} images={r.images} />
         ))}
 
-        <section className="section" style={{ marginTop: 28 }}>
+        <section className="section" style={{ marginTop: 28 }} role="group" aria-label="Available subscriptions">
           <h3 style={{ marginTop: 0 }}>Available subscriptions</h3>
-          <div className="rail-row">
-            <div
+          <div className="rail-row" role="listbox" aria-label="Subscription plans">
+            <button
               ref={(el) => (subscriptionRefs.current[0] = el)}
               className="thumbnail"
               tabIndex={0}
+              aria-label="Basic plan"
+              aria-selected="false"
               style={{ minWidth: 260, width: 260, height: 120, display: 'grid', placeItems: 'center', fontWeight: 700, color: 'var(--primary)' }}
             >
               Basic - $4.99
-            </div>
-            <div
+            </button>
+            <button
               ref={(el) => (subscriptionRefs.current[1] = el)}
               className="thumbnail"
               tabIndex={-1}
+              aria-label="Standard plan"
+              aria-selected="false"
               style={{ minWidth: 260, width: 260, height: 120, display: 'grid', placeItems: 'center', fontWeight: 700, color: 'var(--secondary)' }}
             >
               Standard - $9.99
-            </div>
-            <div
+            </button>
+            <button
               ref={(el) => (subscriptionRefs.current[2] = el)}
               className="thumbnail"
               tabIndex={-1}
+              aria-label="Premium plan"
+              aria-selected="false"
               style={{ minWidth: 260, width: 260, height: 120, display: 'grid', placeItems: 'center', fontWeight: 700, color: 'var(--primary)' }}
             >
               Premium - $14.99
-            </div>
+            </button>
           </div>
         </section>
       </main>

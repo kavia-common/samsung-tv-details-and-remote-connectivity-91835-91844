@@ -10,6 +10,7 @@
   --bg: var(--background);
   --surface-bg: var(--surface);
   --focus: var(--primary);
+  --focus-glow: rgba(37,99,235,0.35);
 }
 
 * { box-sizing: border-box; }
@@ -45,13 +46,14 @@ a { color: inherit; text-decoration: none; }
   padding: 8px 12px;
   border-radius: 8px;
   color: var(--text);
-  transition: background .2s, color .2s, transform .1s;
+  transition: background .2s, color .2s, transform .1s, box-shadow .2s;
 }
 
 .menu-item:hover, .menu-item:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
-  transform: translateY(-1px);
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 8px 22px var(--focus-glow);
 }
 
 .menu-item.active {
@@ -133,11 +135,11 @@ a { color: inherit; text-decoration: none; }
   object-fit: cover;
 }
 
-.thumbnail:focus-visible, .thumbnail:hover {
+.thumbnail:focus-visible, .thumbnail:hover, .btn-focusable:focus-visible {
   outline: 3px solid var(--focus);
-  outline-offset: 2px;
-  transform: translateY(-2px);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+  outline-offset: 3px;
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 12px 28px var(--focus-glow);
 }
 
 .section {
@@ -146,6 +148,13 @@ a { color: inherit; text-decoration: none; }
   border-radius: 16px;
   padding: 16px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+/* Focus within for group wrappers */
+[role="group"]:focus-within, [role="listbox"]:focus-within {
+  outline: 2px dashed rgba(37,99,235,0.5);
+  outline-offset: 6px;
+  border-radius: 14px;
 }
 
 .splash {
@@ -173,7 +182,7 @@ a { color: inherit; text-decoration: none; }
 
 input:focus-visible, button:focus-visible, .thumbnail:focus-visible {
   outline: 3px solid var(--focus);
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
 @keyframes fadeIn {

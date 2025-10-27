@@ -6,6 +6,7 @@ import Splash from './routes/Splash.tsx';
 import Home from './routes/Home.tsx';
 import Login from './routes/Login.tsx';
 import MyPlan from './routes/MyPlan.tsx';
+import useTVRemote from './hooks/useTVRemote.ts';
 
 /**
  * PUBLIC_INTERFACE
@@ -15,6 +16,9 @@ function App() {
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', 'light');
   }, []);
+
+  // attach global TV remote key handling
+  useTVRemote();
 
   return (
     <div className="App" style={{ background: 'var(--bg)', color: 'var(--text)' }}>
