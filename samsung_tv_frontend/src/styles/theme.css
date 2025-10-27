@@ -16,7 +16,10 @@
 * { box-sizing: border-box; }
 
 body {
-  background: var(--bg);
+  margin: 0;
+  background:
+    radial-gradient(800px 400px at 20% -10%, rgba(37,99,235,0.10), transparent),
+    linear-gradient(180deg, rgba(37,99,235,0.05), rgba(243,244,246,1));
   color: var(--text);
 }
 

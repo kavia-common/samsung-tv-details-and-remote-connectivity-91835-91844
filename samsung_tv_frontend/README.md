@@ -1,82 +1,47 @@
-# Lightweight React Template for KAVIA
+# Samsung TV Frontend (Ocean Professional)
 
-This project provides a minimal React template with a clean, modern UI and minimal dependencies.
+A Samsung TV-like React UI designed for Tizen emulator and local preview. It includes a TV details panel, remote connectivity controls, keyboard/remote navigation with focus management, and a modern Ocean Professional theme.
 
-## Features
+## Run
 
-- **Lightweight**: No heavy UI frameworks - uses only vanilla CSS and React
-- **Modern UI**: Clean, responsive design with KAVIA brand styling
-- **Fast**: Minimal dependencies for quick loading times
-- **Simple**: Easy to understand and modify
+- npm start
+- Open http://localhost:3000
+- This app uses HashRouter for TV/embedded compatibility and works in Tizen Web Simulator/Emulator.
 
-## Getting Started
+## TV Remote Navigation
 
-In the project directory, you can run:
+- ArrowUp/Down/Left/Right: navigate between focusable cards and groups (Top Menu, Banner, Rails, Subscriptions).
+- Enter/OK: activates the focused element (clicks or submits).
+- Back/Escape: from Home opens an Exit overlay; from other routes, returns to Home.
 
-### `npm start`
+Focus management is handled centrally by src/utils/focusManager.ts and global key handlers via src/hooks/useTVRemote.ts.
 
-Runs the app in development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## TV Details and Remote Controls
 
-### `npm test`
+On the Home screen:
+- Status badges show connection state (Connected/Connecting/Disconnected/Error).
+- Actions: Connect/Disconnect, Refresh, Settings, and Remote (opens on-screen remote).
+- Remote overlay: Up/Down/Left/Right/OK and Back/Home buttons that send keys via RemoteService.
 
-Launches the test runner in interactive watch mode.
+## Remote Connectivity
 
-### `npm run build`
+- RemoteService (src/services/RemoteService.ts) is a stub that simulates connect(), disconnect(), and sendKey(key) and emits status/message events.
+- RemoteProvider (src/store/RemoteContext.tsx) exposes status, lastMessage, and actions to components.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To integrate a real backend, replace the internals of RemoteService with a WebSocket/fetch implementation that maps sendKey to the remote endpoint. Keep the same public API.
 
-## Customization
+## Theme
 
-### Colors
+The Ocean Professional theme features a subtle blue-to-gray gradient background, rounded cards, and soft shadows (see src/styles/theme.css).
 
-The main brand colors are defined as CSS variables in `src/App.css`:
+## Emulator/Keyboard Tips
 
-```css
-:root {
-  --kavia-orange: #E87A41;
-  --kavia-dark: #1A1A1A;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255, 255, 255, 0.1);
-}
-```
+- In the Tizen Emulator or Web Simulator, ensure arrow keys and Enter/Back map to the same codes as standard browsers.
+- If Back is not available on your keyboard, Esc triggers the same action.
+- Safe area margins and 1920x1080 layout are considered; the UI avoids scrolling except for horizontal rails.
 
-### Components
+## Scripts
 
-This template uses pure HTML/CSS components instead of a UI framework. You can find component styles in `src/App.css`. 
-
-Common components include:
-- Buttons (`.btn`, `.btn-large`)
-- Container (`.container`)
-- Navigation (`.navbar`)
-- Typography (`.title`, `.subtitle`, `.description`)
-
-## Learn More
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- npm start — development server
+- npm test — tests
+- npm run build — production build
