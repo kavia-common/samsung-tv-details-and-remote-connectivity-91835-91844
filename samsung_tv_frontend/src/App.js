@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import './styles/theme.css';
 import Splash from './routes/Splash';
@@ -12,6 +12,7 @@ import { RemoteProvider } from './store/RemoteContext.tsx';
 /**
  * PUBLIC_INTERFACE
  * Root component configuring routes for Splash, Home, Login, My Plan and Settings placeholder.
+ * Note: Router is instantiated once at the app root (index.js) using HashRouter for Tizen/webapp compatibility.
  */
 function App() {
   useEffect(() => {
@@ -32,24 +33,22 @@ function App() {
   return (
     <div className="App" style={bgStyle}>
       <RemoteProvider>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Splash />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/my-plan" element={<MyPlan />} />
-            <Route
-              path="/settings"
-              element={
-                <div className="container section" style={{ marginTop: 20 }}>
-                  <h2>Settings</h2>
-                  <p>Settings placeholder</p>
-                </div>
-              }
-            />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </Router>
+        <Routes>
+          <Route path="/" element={<Splash />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/my-plan" element={<MyPlan />} />
+          <Route
+            path="/settings"
+            element={
+              <div className="container section" style={{ marginTop: 20 }}>
+                <h2>Settings</h2>
+                <p>Settings placeholder</p>
+              </div>
+            }
+          />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </RemoteProvider>
     </div>
   );
