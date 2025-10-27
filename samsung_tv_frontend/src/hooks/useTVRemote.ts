@@ -1,23 +1,28 @@
-import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useContext } from 'react';
+import { useLocation, useNavigate, UNSAFE_NavigationContext } from 'react-router-dom';
 import focusManager from '../utils/focusManager.ts';
 
 /**
  * PUBLIC_INTERFACE
  * useTVRemote: Attaches global keydown listeners to enable TV remote-like navigation:
- * - ArrowLeft/ArrowRight: move within group (wrap-around)
- * - ArrowUp/ArrowDown: move across groups
+ * - ArrowLeft/Right: move within group (wrap-around)
+ * - ArrowUp/Down: move across groups
  * - Enter: activates the focused element (click)
- * - Back (Escape/Backspace or HistoryBack): route/back behavior with exit confirm on Home
+ * - Back (Escape/Backspace): route/back behavior with exit confirm on Home
  *
  * Also sets initial focus per route using stored session focus when available.
  */
 export default function useTVRemote() {
+  // Always call hooks; gate behavior using hasRouter
   const location = useLocation();
   const navigate = useNavigate();
+  const navContext = useContext(UNSAFE_NavigationContext as unknown as React.Context<any>);
+  const hasRouter = !!navContext;
 
   // Initial focus on route changes
   useEffect(() => {
+    if (!hasRouter) return;
+
     const path = location.pathname;
     // Guard: skip automatic focus on Splash
     if (path === '/' || path === '/splash') return;
@@ -51,10 +56,12 @@ export default function useTVRemote() {
     });
 
     return () => cancelAnimationFrame(id);
-  }, [location.pathname]);
+  }, [hasRouter, location.pathname]);
 
   // Back behavior and Arrow navigation
   useEffect(() => {
+    if (!hasRouter) return;
+
     const isTV = true; // Guard for TV-like environments; still works on web
     if (!isTV) return;
 
@@ -131,7 +138,7 @@ export default function useTVRemote() {
     return () => {
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [location.pathname]);
+  }, [hasRouter, location.pathname]);
 
   // Lightweight exit overlay implementation
   const openExitOverlay = () => {
