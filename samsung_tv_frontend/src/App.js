@@ -7,7 +7,6 @@ import Home from './routes/Home';
 import Login from './routes/Login';
 import MyPlan from './routes/MyPlan';
 import Settings from './routes/Settings';
-import useTVRemote from './hooks/useTVRemote.ts';
 import { RemoteProvider } from './store/RemoteContext.tsx';
 
 /**
@@ -21,10 +20,6 @@ function App() {
     document.documentElement.setAttribute('data-theme', 'light');
   }, []);
 
-  // Attach global TV remote key handling
-  useTVRemote();
-
-  // Ocean Professional gradient background and clean styling
   const bgStyle = {
     minHeight: '100vh',
     background:

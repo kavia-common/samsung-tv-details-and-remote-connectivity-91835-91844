@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import TopMenu from '../components/TopMenu';
 import Banner from '../components/Banner';
 import Rail from '../components/Rail';
-import focusManager from '../utils/focusManager.ts';
 import { useRemote } from '../store/RemoteContext.tsx';
 
 /**
@@ -14,7 +13,6 @@ export default function Home() {
   const { status, lastMessage, connect, disconnect, sendKey } = useRemote();
 
   // Helper to reference local placeholder images from /assets path.
-  // These should be placed under public/assets by users. Fallbacks will hide broken images gracefully.
   const img = (name: string) => `/assets/${name}`;
 
   const rails = [
@@ -27,17 +25,6 @@ export default function Home() {
 
   const subscriptionRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const [showRemote, setShowRemote] = useState(false);
-
-  useEffect(() => {
-    // Register subscriptions as a focus group
-    subscriptionRefs.current.forEach((el, i) => {
-      if (el) {
-        el.setAttribute('role', 'option');
-        el.onfocus = () => focusManager.setCurrent('subscriptions', i);
-        focusManager.register(`subscriptions-${i}`, 'subscriptions', el, i);
-      }
-    });
-  }, []);
 
   const tvInfoCardStyle: React.CSSProperties = {
     display: 'grid',
